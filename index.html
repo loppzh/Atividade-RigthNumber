@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RightNumber</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reset.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="timer" id="timer">00:30</div>
+        <h2>ESCOLHA UM NÚMERO <br> ENTRE 0 E 9</h2>
+
+        <div class="display-number" id="display">?</div>
+
+        <div class="hint" id="hint"></div>
+
+        <div class="number-pad">
+            <button class="btn" onclick="guess(0)">0</button>
+            <button class="btn" onclick="guess(1)">1</button>
+            <button class="btn" onclick="guess(2)">2</button>
+            <button class="btn" onclick="guess(3)">3</button>
+            <button class="btn" onclick="guess(4)">4</button>
+            <button class="btn" onclick="guess(5)">5</button>
+            <button class="btn" onclick="guess(6)">6</button>
+            <button class="btn" onclick="guess(7)">7</button>
+            <button class="btn" onclick="guess(8)">8</button>
+            <button class="btn" onclick="guess(9)">9</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
