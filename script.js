@@ -2,19 +2,21 @@ let randomNumber = Math.floor(Math.random() * 10);
 let score = 0;
 let time = 30;
 let interval = null;
+let decrement = 1; // Velocidade do tempo
 
 const timerElement = document.getElementById('timer');
 const hintElement = document.getElementById('hint');
 const displayElement = document.getElementById('display');
+const messageElement = document.getElementById('message');
+const numberPad = document.getElementById('number-pad');
 
 function startTimer() {
     interval = setInterval(() => {
-        time--;
+        time -= decrement;
         updateTimer();
         if (time <= 0) {
             clearInterval(interval);
-            alert('⏳ Tempo esgotado! Você perdeu.');
-            resetGame();
+            showMessage('⏳ Tempo esgotado! Você perdeu.');
         }
     }, 1000);
 }
@@ -30,17 +32,17 @@ function guess(number) {
         score++;
         playSound('correct');
         hintElement.textContent = '✅ ACERTOU!';
+        decrement = 1; // Volta ao normal
+
         if (score >= 3) {
             clearInterval(interval);
-            alert('🎉 Vitória! Você acertou 3 vezes.');
-            resetGame();
+            showMessage('🎉 Você é o vencedor! 🎉');
         } else {
             nextRound();
         }
     } else {
         playSound('error');
         hintElement.textContent = number > randomNumber ? 'O NÚMERO É MENOR' : 'O NÚMERO É MAIOR';
-        // Aumentar velocidade do tempo
         accelerateTimer();
     }
 }
@@ -51,16 +53,7 @@ function nextRound() {
 }
 
 function accelerateTimer() {
-    clearInterval(interval);
-    interval = setInterval(() => {
-        time -= 2; // Tempo corre mais rápido
-        updateTimer();
-        if (time <= 0) {
-            clearInterval(interval);
-            alert('⏳ Tempo esgotado! Você perdeu.');
-            resetGame();
-        }
-    }, 1000);
+    decrement = 2; // Acelera o tempo
 }
 
 function playSound(type) {
@@ -70,15 +63,24 @@ function playSound(type) {
     sound.play();
 }
 
+function showMessage(text) {
+    messageElement.querySelector('h2').textContent = text;
+    messageElement.style.display = 'block';
+    numberPad.style.display = 'none';
+}
+
 function resetGame() {
     randomNumber = Math.floor(Math.random() * 10);
     score = 0;
     time = 30;
+    decrement = 1;
     clearInterval(interval);
     interval = null;
     updateTimer();
     hintElement.textContent = '';
     displayElement.textContent = '?';
+    messageElement.style.display = 'none';
+    numberPad.style.display = 'grid';
 }
 
 window.onload = resetGame;

@@ -17,7 +17,7 @@
 
         <div class="hint" id="hint"></div>
 
-        <div class="number-pad">
+        <div class="number-pad" id="number-pad">
             <button class="btn" onclick="guess(0)">0</button>
             <button class="btn" onclick="guess(1)">1</button>
             <button class="btn" onclick="guess(2)">2</button>
@@ -28,6 +28,11 @@
             <button class="btn" onclick="guess(7)">7</button>
             <button class="btn" onclick="guess(8)">8</button>
             <button class="btn" onclick="guess(9)">9</button>
+        </div>
+
+        <div class="message" id="message">
+            <h2>🎉 Você é o vencedor! 🎉</h2>
+            <button onclick="resetGame()" class="btn-play-again">Jogar Novamente</button>
         </div>
     </div>
 
