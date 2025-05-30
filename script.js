@@ -2,7 +2,7 @@ let randomNumber = Math.floor(Math.random() * 10);
 let score = 0;
 let time = 30;
 let interval = null;
-let decrement = 1; // Velocidade do tempo
+let decrement = 1;
 
 const timerElement = document.getElementById('timer');
 const hintElement = document.getElementById('hint');
@@ -12,14 +12,19 @@ const numberPad = document.getElementById('number-pad');
 
 function startTimer() {
     interval = setInterval(() => {
+        if (time <= 0) {
+            time = 0;
+            updateTimer();
+            clearInterval(interval);
+            playSound('loss'); // toca som de derrota
+            showMessage('⏳ Tempo esgotado! Você perdeu.');
+            return;
+        }
         time -= decrement;
         updateTimer();
-        if (time <= 0) {
-            clearInterval(interval);
-            showMessage('⏳ Tempo esgotado! Você perdeu.');
-        }
     }, 1000);
 }
+
 
 function updateTimer() {
     timerElement.textContent = `00:${time < 10 ? '0' + time : time}`;
@@ -32,10 +37,10 @@ function guess(number) {
         score++;
         playSound('correct');
         hintElement.textContent = '✅ ACERTOU!';
-        decrement = 1; // Volta ao normal
-
+        decrement = 1; // Volta ao ritmo normal
         if (score >= 3) {
             clearInterval(interval);
+            playSound('win');
             showMessage('🎉 Você é o vencedor! 🎉');
         } else {
             nextRound();
@@ -43,7 +48,7 @@ function guess(number) {
     } else {
         playSound('error');
         hintElement.textContent = number > randomNumber ? 'O NÚMERO É MENOR' : 'O NÚMERO É MAIOR';
-        accelerateTimer();
+        incrementDecrement(); // Acelera o timer
     }
 }
 
@@ -52,16 +57,31 @@ function nextRound() {
     displayElement.textContent = '?';
 }
 
-function accelerateTimer() {
-    decrement = 2; // Acelera o tempo
+function incrementDecrement() {
+    decrement++;
 }
 
 function playSound(type) {
-    const sound = new Audio(type === 'correct' 
-        ? 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_5a6a5dc993.mp3?filename=success-1-6297.mp3' 
-        : 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_57d7e0fa90.mp3?filename=error-1-6296.mp3');
-    sound.play();
+    const correctSound = document.getElementById('sound-correct');
+    const errorSound = document.getElementById('sound-error');
+    const winSound = document.getElementById('sound-win');
+    const lossSound = document.getElementById('sound-loss');
+
+    if (type === 'correct') {
+        correctSound.currentTime = 0;
+        correctSound.play();
+    } else if (type === 'error') {
+        errorSound.currentTime = 0;
+        errorSound.play();
+    } else if (type === 'win') {
+        winSound.currentTime = 0;
+        winSound.play();
+    } else if (type === 'loss') {
+        lossSound.currentTime = 0;
+        lossSound.play();
+    }
 }
+
 
 function showMessage(text) {
     messageElement.querySelector('h2').textContent = text;

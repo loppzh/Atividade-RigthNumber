@@ -14,7 +14,6 @@
         <h2>ESCOLHA UM NÚMERO <br> ENTRE 0 E 9</h2>
 
         <div class="display-number" id="display">?</div>
-
         <div class="hint" id="hint"></div>
 
         <div class="number-pad" id="number-pad">
@@ -26,8 +25,10 @@
             <button class="btn" onclick="guess(5)">5</button>
             <button class="btn" onclick="guess(6)">6</button>
             <button class="btn" onclick="guess(7)">7</button>
+            <div class="empty"></div>
             <button class="btn" onclick="guess(8)">8</button>
             <button class="btn" onclick="guess(9)">9</button>
+            <div class="empty"></div>
         </div>
 
         <div class="message" id="message">
@@ -35,6 +36,12 @@
             <button onclick="resetGame()" class="btn-play-again">Jogar Novamente</button>
         </div>
     </div>
+
+    <audio id="sound-correct" src="audio/correct.mp3"></audio>
+    <audio id="sound-error" src="audio/failed.mp3"></audio>
+    <audio id="sound-win" src="audio/fourth.mp3"></audio>
+    <audio id="sound-loss" src="audio/loss.mp3"></audio>
+
 
     <script src="script.js"></script>
 </body>
